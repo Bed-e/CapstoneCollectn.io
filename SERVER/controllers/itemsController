@@ -1,0 +1,69 @@
+const Item = require("../models/item");
+
+//
+const fetchItems = async (req, res) => {
+  //find the items
+  const items = await Item.find();
+  //respond with them
+  res.json({ items });
+};
+
+const fetchItem = async (req, res) => {
+  //get id off of the url
+  const itemId = req.params.id;
+  //find the item using that id
+  const item = await Item.findById(itemId);
+  // resopond with the item
+  res.json({ item });
+};
+
+const createItem = async (req, res) => {
+  //get the sent in data off req body
+  const { itemName, description, image, dateCreated } = req.body;
+
+  //create a item with it
+  const item = await Item.create({
+    itemName,
+    description,
+    image,
+    dateCreated,
+  });
+  //respond with the new item
+
+  res.json({ item });
+};
+
+const updateItem = async (req, res) => {
+  //get the id off the url
+  const itemId = req.params.id;
+  //get data off req body
+  const { itemName, description, image, dateCreated } = req.body;
+  //find and update the record
+  await Item.findByIdAndUpdate(itemId, {
+    itemName,
+    description,
+    image,
+    dateCreated,
+  });
+  //find updated item
+  const item = await Item.findById(itemId);
+  //respond with it
+  res.json({ item });
+};
+
+const deleteItem = async (req, res) => {
+  //get id off url
+  itemId = req.params.id;
+  //delete the record
+  await Item.findByIdAndDelete(itemId);
+  //respond
+  res.json({ success: "record deleted" });
+};
+
+module.exports = {
+  fetchItems,
+  fetchItem,
+  createItem,
+  deleteItem,
+  updateItem,
+};

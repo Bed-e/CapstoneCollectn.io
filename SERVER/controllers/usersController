@@ -1,0 +1,69 @@
+const User = require("../models/user");
+
+//
+const fetchUsers = async (req, res) => {
+  //find the users
+  const users = await User.find();
+  //respond with them
+  res.json({ users });
+};
+
+const fetchUser = async (req, res) => {
+  //get id off of the url
+  const userId = req.params.id;
+  //find the user using that id
+  const user = await User.findById(userId);
+  // resopond with the user
+  res.json({ user });
+};
+
+const createUser = async (req, res) => {
+  //get the sent in data off req body
+  const { username, password, dateCreated, owns } = req.body;
+
+  //create a user with it
+  const user = await User.create({
+    username,
+    password,
+    dateCreated,
+    owns,
+  });
+  //respond with the new user
+
+  res.json({ user });
+};
+
+const updateUser = async (req, res) => {
+  //get the id off the url
+  const userId = req.params.id;
+  //get data off req body
+  const { username, password, dateCreated, owns } = req.body;
+  //find and update the record
+  await User.findByIdAndUpdate(userId, {
+    username,
+    password,
+    dateCreated,
+    owns,
+  });
+  //find updated user
+  const user = await User.findById(userId);
+  //respond with it
+  res.json({ user });
+};
+
+const deleteUser = async (req, res) => {
+  //get id off url
+  userId = req.params.id;
+  //delete the record
+  await User.findByIdAndDelete(userId);
+  //respond
+  res.json({ success: "record deleted" });
+};
+
+module.exports = {
+  fetchUsers,
+  fetchUser,
+  createUser,
+  deleteUser,
+  updateUser,
+};
