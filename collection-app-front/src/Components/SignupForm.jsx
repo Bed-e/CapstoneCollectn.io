@@ -1,11 +1,13 @@
-import { React, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function SignupForm({ setView, setUser }) {
+function SignupForm({ setUser }) {
   const API_URL = "http://localhost:3003";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const navigate = useNavigate(); // Use the useNavigate hook
   let userExists = false;
 
   const getAllUsers = async () => {
@@ -25,44 +27,26 @@ function SignupForm({ setView, setUser }) {
     }
     e.preventDefault();
     const allUsers = await getAllUsers();
-    console.log(allUsers);
-
-    // Variable to track if a match is found
-    //console.log(`hello, userexists=${userExists}`);
-    // Iterate through allUsers array
 
     for (let i = 0; i < allUsers.users.length; i++) {
-      //   console.log(
-      //     `checking if allUsers[${i}].username === username: ${allUsers.users[i].username} = ${username}?`
-      //   );
       if (allUsers.users[i].username === username) {
         userExists = true;
-        console.log(`userExists updated! userexists= ${userExists}`);
-        break; // Exit the loop early if a match is found
+        break;
       }
     }
 
     if (userExists) {
       alert("Username already exists. Please choose another one.");
     } else if (username.trim() === "" || password.trim() === "") {
-      alert("username or password may not be blank");
+      alert("Username or password may not be blank");
     } else {
       const userData = { username, password };
       try {
         const newUser = await createUser(userData);
-        console.log("User created:", newUser);
+        //console.log("User created:", newUser);
 
-        const id = newUser.user._id;
-
-        // Redirect or update the UI accordingly
-        //
-        //
-        //
-        setUser(id);
-        setView("home");
-        ///
-        //
-        //
+        setUser(newUser.user); // Update the user state
+        navigate("/home"); // Navigate to the home route
       } catch (error) {
         console.error("Error creating user:", error);
       }
@@ -93,8 +77,8 @@ function SignupForm({ setView, setUser }) {
         <button type="submit">Signup</button>
       </form>
       <h3>
-        Already have an account?
-        <button onClick={() => setView("login")}>Log in!</button>
+        Already have an account?{" "}
+        <button onClick={() => navigate("/login")}>Log in!</button>
       </h3>
     </div>
   );
