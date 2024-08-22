@@ -39,6 +39,7 @@ function App() {
               return itemResponse.data;
             })
           );
+          console.log(itemDetails);
           setItems(itemDetails);
         } catch (error) {
           console.error("Error fetching user items:", error);
@@ -51,7 +52,6 @@ function App() {
 
   const handleLogout = () => {
     setUser(null); // Clear user state
-    setItems([]); // Optionally clear items state
   };
 
   return (

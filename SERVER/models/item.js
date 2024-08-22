@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const itemSchema = Schema({
   itemName: String,
   description: String,
+  character: String,
   image: Object,
   dateCreated: { type: Date, default: Date.now },
 });

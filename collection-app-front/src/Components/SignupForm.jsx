@@ -29,7 +29,7 @@ function SignupForm({ setUser }) {
     const allUsers = await getAllUsers();
 
     for (let i = 0; i < allUsers.users.length; i++) {
-      if (allUsers.users[i].username === username) {
+      if (allUsers.users[i].username.trim() === username.trim()) {
         userExists = true;
         break;
       }

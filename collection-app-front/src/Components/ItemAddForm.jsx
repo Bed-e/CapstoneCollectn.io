@@ -36,10 +36,11 @@ function ItemAddForm({ setItems, items, userId }) {
         );
 
         // Get the added item and its ID
-        const myItem = response.data.item;
-        const itemId = myItem._id;
+        const myItem = response.data;
+        const itemId = myItem.item._id;
 
         // Update the items state
+        console.log([...items, myItem]);
         setItems([...items, myItem]);
 
         // Get the current user's data

@@ -19,12 +19,14 @@ const fetchItem = async (req, res) => {
 
 const createItem = async (req, res) => {
   //get the sent in data off req body
-  const { itemName, description, image, dateCreated } = req.body;
+  const { itemName, description, character, image, dateCreated } = req.body;
+  console.log(character);
 
   //create a item with it
   const item = await Item.create({
     itemName,
     description,
+    character,
     image,
     dateCreated,
   });
@@ -37,11 +39,12 @@ const updateItem = async (req, res) => {
   //get the id off the url
   const itemId = req.params.id;
   //get data off req body
-  const { itemName, description, image, dateCreated } = req.body;
+  const { itemName, description, character, image, dateCreated } = req.body;
   //find and update the record
   await Item.findByIdAndUpdate(itemId, {
     itemName,
     description,
+    character,
     image,
     dateCreated,
   });
