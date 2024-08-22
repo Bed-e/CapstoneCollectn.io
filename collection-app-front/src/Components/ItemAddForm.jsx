@@ -42,7 +42,7 @@ function ItemAddForm({ setItems, items, userId }) {
         // Update the items state
         console.log(items);
         console.log(myItem);
-        //setItems([...items, myItem]);
+        const itemId = myItem._id;
         const newItems = [...items, myItem];
         console.log(newItems);
         setItems(newItems);
@@ -52,14 +52,17 @@ function ItemAddForm({ setItems, items, userId }) {
           `http://localhost:3003/users/${userId}`
         );
         const user = userResponse.data.user;
+        console.log(user.owns);
 
         // Append the new itemId to the owns array
-        //const updatedOwnsArray = [...user.owns, itemId];
+        console.log(itemId);
+        const updatedOwnsArray = [...user.owns, itemId];
+        console.log(updatedOwnsArray);
 
         // Send a PUT request to update the user's owns array
-        // await axios.put(`http://localhost:3003/users/${userId}`, {
-        //   owns: updatedOwnsArray,
-        // });
+        await axios.put(`http://localhost:3003/users/${userId}`, {
+          owns: updatedOwnsArray,
+        });
       } catch (error) {
         console.error("Error adding item or updating user:", error);
       }

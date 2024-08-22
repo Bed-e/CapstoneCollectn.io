@@ -42,14 +42,14 @@ function App() {
             const res = await axios.get(
               `http://localhost:3003/items/${userItems[i]}`
             );
-            const itemObj = res.data; //?
+            const itemObj = res.data.item; //?
             console.log(`object for the item: `);
             console.log(itemObj);
             itemDetails.push(itemObj);
           }
 
           // Log the flat array of item objects
-          //console.log("Flattened itemDetails array:", itemDetails);
+          console.log("Flattened itemDetails array:", itemDetails);
 
           // Set the items state with the flattened array
           setItems(itemDetails);

@@ -3,7 +3,7 @@ import axios from "axios";
 
 function MutableItem({ item, setItems, items, index }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedItem, setEditedItem] = useState(item.item);
+  const [editedItem, setEditedItem] = useState(item);
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -21,12 +21,14 @@ function MutableItem({ item, setItems, items, index }) {
         `http://localhost:3003/items/${editedItem._id}`,
         editedItem
       );
-      const updatedItem = response.data;
-
       // Update the items array with the updated item
 
-      console.log(updatedItem); //i'm onto something here
-      //start here after lunch
+      console.log(editedItem); //i'm onto something here
+      //find index of edited item
+      const index = NaN;
+      for (let i = 0; i < items.length; i++) {
+        console.log(items[i]);
+      }
     } catch (error) {
       console.error("Error updating item:", error);
     }
@@ -39,10 +41,11 @@ function MutableItem({ item, setItems, items, index }) {
           <input
             type="text"
             name="itemName"
-            value={editedItem.name}
+            value={editedItem.itemName}
             onChange={handleInputChange}
           />
-          <textarea
+          <input
+            type="text"
             name="description"
             value={editedItem.description}
             onChange={handleInputChange}
@@ -56,7 +59,7 @@ function MutableItem({ item, setItems, items, index }) {
           {editedItem.image && (
             <img
               src={editedItem.image.image}
-              alt={editedItem.name}
+              alt={editedItem.itemName}
               style={{ maxWidth: "200px", maxHeight: "200px" }}
             />
           )}
@@ -75,7 +78,7 @@ function MutableItem({ item, setItems, items, index }) {
           {item.image && (
             <img
               src={item.image.image}
-              alt={item.itemName}
+              alt={item.name}
               style={{ maxWidth: "200px", maxHeight: "200px" }}
             />
           )}
