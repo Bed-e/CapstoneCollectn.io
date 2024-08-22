@@ -36,12 +36,16 @@ function ItemAddForm({ setItems, items, userId }) {
         );
 
         // Get the added item and its ID
-        const myItem = response.data;
-        const itemId = myItem.item._id;
+        const myItem = response.data.item;
+        //const itemId = myItem._id;
 
         // Update the items state
-        console.log([...items, myItem]);
-        setItems([...items, myItem]);
+        console.log(items);
+        console.log(myItem);
+        //setItems([...items, myItem]);
+        const newItems = [...items, myItem];
+        console.log(newItems);
+        setItems(newItems);
 
         // Get the current user's data
         const userResponse = await axios.get(
@@ -50,12 +54,12 @@ function ItemAddForm({ setItems, items, userId }) {
         const user = userResponse.data.user;
 
         // Append the new itemId to the owns array
-        const updatedOwnsArray = [...user.owns, itemId];
+        //const updatedOwnsArray = [...user.owns, itemId];
 
         // Send a PUT request to update the user's owns array
-        await axios.put(`http://localhost:3003/users/${userId}`, {
-          owns: updatedOwnsArray,
-        });
+        // await axios.put(`http://localhost:3003/users/${userId}`, {
+        //   owns: updatedOwnsArray,
+        // });
       } catch (error) {
         console.error("Error adding item or updating user:", error);
       }

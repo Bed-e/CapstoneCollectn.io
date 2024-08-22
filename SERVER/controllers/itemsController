@@ -20,7 +20,7 @@ const fetchItem = async (req, res) => {
 const createItem = async (req, res) => {
   //get the sent in data off req body
   const { itemName, description, character, image, dateCreated } = req.body;
-  console.log(character);
+  //   console.log(character);
 
   //create a item with it
   const item = await Item.create({

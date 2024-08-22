@@ -1,23 +1,17 @@
 import React from "react";
+import MutableItem from "./MutableItem";
 
-function ItemList({ items }) {
+function ItemList({ items, setItems }) {
   return (
     <ul>
       {items.map((item, index) => (
-        <li key={index}>
-          <h3>{item.item.itemName}</h3>
-          <p>{item.item.description}</p>
-          <p>
-            <strong>Character:</strong> {item.item.character}
-          </p>
-          {item.item.image && (
-            <img
-              src={item.item.image.image}
-              alt={item.item.itemName}
-              style={{ maxWidth: "200px", maxHeight: "200px" }}
-            />
-          )}
-        </li>
+        <MutableItem
+          key={index}
+          item={item}
+          setItems={setItems}
+          items={items}
+          index={index}
+        />
       ))}
     </ul>
   );
