@@ -12,7 +12,6 @@ import Filters from "./Components/Filters";
 import ItemList from "./Components/ItemList";
 import LoginForm from "./Components/LoginForm";
 import SignupForm from "./Components/SignupForm";
-import WelcomeUser from "./Components/WelcomeUser";
 import LogoutButton from "./Components/LogoutButton";
 import DeleteAccountButton from "./Components/DeleteAccountButton";
 
@@ -23,6 +22,8 @@ import "./App.css";
 function App() {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
+  const [sortKey, setSortKey] = useState("alphabetical");
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const fetchUserItems = async () => {
@@ -82,28 +83,58 @@ function App() {
   return (
     <Router>
       <div>
-        <TopTitle />
+        <div className="TopTitle">
+          <TopTitle />
+        </div>
+
         <Routes>
-          <Route path="/login" element={<LoginForm setUser={setUser} />} />
-          <Route path="/signup" element={<SignupForm setUser={setUser} />} />
+          <Route
+            path="/login"
+            element={
+              <div className="LoginForm">
+                <div className="container">
+                  <LoginForm setUser={setUser} />
+                </div>
+              </div>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <div className="SignupForm">
+                <div className="container">
+                  <SignupForm setUser={setUser} />
+                </div>
+              </div>
+            }
+          />
           <Route
             path="/home"
             element={
               user ? (
-                <>
-                  <LogoutButton handleLogout={handleLogout} />
-                  <DeleteAccountButton
-                    handleDeleteAccount={handleDeleteAccount}
-                  />
-                  <WelcomeUser username={user.username} />
-                  <ItemAddForm
-                    setItems={setItems}
-                    items={items}
-                    userId={user._id}
-                  />
-                  <Filters />
-                  <ItemList items={items} setItems={setItems} />
-                </>
+                <div className="Home">
+                  <>
+                    <div className="TopButtons">
+                      <LogoutButton handleLogout={handleLogout} />
+                      <DeleteAccountButton
+                        handleDeleteAccount={handleDeleteAccount}
+                      />
+                    </div>
+                    <ItemAddForm
+                      setItems={setItems}
+                      items={items}
+                      userId={user._id}
+                    />
+                    <Filters setSortKey={setSortKey} />
+                    <div className="ItemList">
+                      <ItemList
+                        sortKey={sortKey}
+                        items={items}
+                        setItems={setItems}
+                      />
+                    </div>
+                  </>
+                </div>
               ) : (
                 <Navigate to="/login" />
               )

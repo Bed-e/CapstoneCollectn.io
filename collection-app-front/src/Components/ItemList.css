@@ -1,0 +1,50 @@
+.ItemList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between the items */
+  justify-content: center; /* Center items horizontally */
+}
+
+.ItemList .item {
+  background-color: #f8f8f8;
+  border: 2px solid #333; /* Clear border to delineate items */
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px; /* Fixed width */
+  box-sizing: border-box; /* Include padding in width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word; /* Ensures long words or URLs break into the next line */
+  overflow: hidden; /* Prevents content overflow */
+}
+
+.ItemList .item img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Center the image */
+}
+
+.ItemList .item input {
+  width: 100%;
+  box-sizing: border-box; /* Ensures input fields do not overflow */
+}
+
+.ItemList .item button {
+  display: block;
+  margin-top: 10px;
+  width: 100%; /* Make buttons full-width */
+}
+
+.ItemList .item h3,
+.ItemList .item p {
+  margin: 0;
+  padding: 5px 0;
+  text-align: center; /* Center text inside the item */
+  overflow-wrap: break-word; /* Ensures text wraps within the item */
+}
+
+li {
+  list-style-type: none; /* Remove default bullet points */
+  margin: 0;
+  padding: 0;
+}

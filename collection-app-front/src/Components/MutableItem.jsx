@@ -4,6 +4,7 @@ import axios from "axios";
 function MutableItem({ item, setItems, items, index }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedItem, setEditedItem] = useState(item);
+  const [newImage, setNewImage] = useState(null); // State to hold the new image file
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -14,37 +15,42 @@ function MutableItem({ item, setItems, items, index }) {
     setEditedItem((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewImage(reader.result); // Set the new image as base64
+        setEditedItem((prev) => ({
+          ...prev,
+          image: { image: reader.result },
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = async () => {
     try {
-      //console.log(editedItem);
       const response = await axios.put(
         `http://localhost:3003/items/${editedItem._id}`,
         editedItem
       );
-      //Update the items array with the updated item
 
-      //console.log(editedItem); //i'm onto something here
-      //find index of edited item
       let index = NaN;
       for (let i = 0; i < items.length; i++) {
-        //console.log(items[i]);
         if (editedItem._id === items[i]._id) {
           index = i;
           break;
         }
       }
-      // Make a copy of the items array
-      const itemsCopy = [...items];
 
-      // Change the element of the copy at index to the updatedItem
+      const itemsCopy = [...items];
       if (!isNaN(index)) {
         itemsCopy.splice(index, 1, editedItem);
       }
 
-      // Set items to the copy of the array with the changed element
-      //console.log(itemsCopy);
       setItems(itemsCopy);
-
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating item:", error);
@@ -52,7 +58,7 @@ function MutableItem({ item, setItems, items, index }) {
   };
 
   return (
-    <li>
+    <li className="item">
       {isEditing ? (
         <>
           <input
@@ -73,10 +79,11 @@ function MutableItem({ item, setItems, items, index }) {
             value={editedItem.character}
             onChange={handleInputChange}
           />
-          {editedItem.image && (
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+          {newImage && (
             <img
-              src={editedItem.image.image}
-              alt={editedItem.itemName}
+              src={newImage}
+              alt="New upload"
               style={{ maxWidth: "200px", maxHeight: "200px" }}
             />
           )}
@@ -84,18 +91,15 @@ function MutableItem({ item, setItems, items, index }) {
         </>
       ) : (
         <>
-          {/* {console.log(item)} */}
-
           <h3>{editedItem.itemName}</h3>
           <p>{editedItem.description}</p>
           <p>
             <strong>Character:</strong> {editedItem.character}
           </p>
-
           {editedItem.image && (
             <img
               src={editedItem.image.image}
-              alt={editedItem.name}
+              alt={editedItem.itemName}
               style={{ maxWidth: "200px", maxHeight: "200px" }}
             />
           )}

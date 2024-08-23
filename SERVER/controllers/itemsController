@@ -1,66 +1,93 @@
 const Item = require("../models/item");
 
-//
 const fetchItems = async (req, res) => {
-  //find the items
-  const items = await Item.find();
-  //respond with them
-  res.json({ items });
+  try {
+    const items = await Item.find();
+    res.json({ items });
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    res.status(500).json({ error: "Failed to fetch items" });
+  }
 };
 
 const fetchItem = async (req, res) => {
-  //get id off of the url
-  const itemId = req.params.id;
-  //find the item using that id
-  const item = await Item.findById(itemId);
-  // resopond with the item
-  res.json({ item });
+  try {
+    const itemId = req.params.id;
+    const item = await Item.findById(itemId);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json({ item });
+  } catch (error) {
+    console.error("Error fetching item:", error);
+    res.status(500).json({ error: "Failed to fetch item" });
+  }
 };
 
 const createItem = async (req, res) => {
-  //get the sent in data off req body
-  const { itemName, description, character, image, dateCreated } = req.body;
-  //   console.log(character);
-
-  //create a item with it
-  const item = await Item.create({
-    itemName,
-    description,
-    character,
-    image,
-    dateCreated,
-  });
-  //respond with the new item
-
-  res.json({ item });
+  try {
+    const { itemName, description, character, image, dateCreated } = req.body;
+    const item = await Item.create({
+      itemName,
+      description,
+      character,
+      image,
+      dateCreated,
+    });
+    res.json({ item });
+  } catch (error) {
+    if (error.code === "LIMIT_FILE_SIZE") {
+      console.error("File too large:", error);
+      res.status(413).json({ error: "File too large" });
+    } else {
+      console.error("Error creating item:", error);
+      res.status(500).json({ error: "Failed to create item" });
+    }
+  }
 };
 
 const updateItem = async (req, res) => {
-  //get the id off the url
-  const itemId = req.params.id;
-  //get data off req body
-  const { itemName, description, character, image, dateCreated } = req.body;
-  //find and update the record
-  await Item.findByIdAndUpdate(itemId, {
-    itemName,
-    description,
-    character,
-    image,
-    dateCreated,
-  });
-  //find updated item
-  const item = await Item.findById(itemId);
-  //respond with it
-  res.json({ item });
+  try {
+    const itemId = req.params.id;
+    const { itemName, description, character, image, dateCreated } = req.body;
+    const item = await Item.findByIdAndUpdate(
+      itemId,
+      {
+        itemName,
+        description,
+        character,
+        image,
+        dateCreated,
+      },
+      { new: true } // return the updated document
+    );
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json({ item });
+  } catch (error) {
+    if (error.code === "LIMIT_FILE_SIZE") {
+      console.error("File too large:", error);
+      res.status(413).json({ error: "File too large" });
+    } else {
+      console.error("Error updating item:", error);
+      res.status(500).json({ error: "Failed to update item" });
+    }
+  }
 };
 
 const deleteItem = async (req, res) => {
-  //get id off url
-  itemId = req.params.id;
-  //delete the record
-  await Item.findByIdAndDelete(itemId);
-  //respond
-  res.json({ success: "record deleted" });
+  try {
+    const itemId = req.params.id;
+    const item = await Item.findByIdAndDelete(itemId);
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+    res.json({ success: "Record deleted" });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({ error: "Failed to delete item" });
+  }
 };
 
 module.exports = {

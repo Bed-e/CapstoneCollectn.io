@@ -6,7 +6,7 @@ function LoginForm({ setUser }) {
   const API_URL = "http://localhost:3003";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
 
   const getAllUsers = async () => {
     const response = await axios.get(`${API_URL}/users`);
@@ -31,7 +31,7 @@ function LoginForm({ setUser }) {
 
         if (usersArr[i].password === password) {
           setUser(usersArr[i]);
-          navigate("/home"); // Navigate to the home route
+          navigate("/home");
           return;
         } else {
           alert("Incorrect username or password.");
