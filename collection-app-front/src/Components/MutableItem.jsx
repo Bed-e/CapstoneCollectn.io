@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function MutableItem({ item, setItems, items, index }) {
+function MutableItem({ item, setItems, items, user }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedItem, setEditedItem] = useState(item);
-  const [newImage, setNewImage] = useState(null); // State to hold the new image file
+  const [newImage, setNewImage] = useState(null);
+  const apiURL = "https://collectionapi-5w1t.onrender.com";
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -13,6 +14,41 @@ function MutableItem({ item, setItems, items, index }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedItem((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleDeleteItem = async (e) => {
+    e.preventDefault();
+    const itemid = item._id;
+    const userid = user._id;
+    //console.log(`deleting item: ${itemid}`);
+    try {
+      //delete the item from the database
+      await axios.delete(`${apiURL}/items/${itemid}`);
+
+      //remove the item from the user's has array
+
+      // 1. get the user object from the user's id
+      const userobj = await axios.get(`${apiURL}/users/${userid}`);
+      //console.log(userobj);
+      // 2. get the owns array from the user's object
+      const owns = userobj.data.user.owns;
+      console.log(owns);
+      // Find the index of the itemid in the owns array
+      const index = owns.indexOf(itemid);
+
+      if (index > -1) {
+        // Remove the itemid from the owns array
+        owns.splice(index, 1);
+      }
+
+      // Update the user object with the modified owns array
+      await axios.put(`${apiURL}/users/${userid}`, { owns });
+
+      // Update the items state locally if needed
+      setItems(items.filter((item) => item._id !== itemid));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -33,7 +69,7 @@ function MutableItem({ item, setItems, items, index }) {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3003/items/${editedItem._id}`,
+        `${apiURL}/items/${editedItem._id}`,
         editedItem
       );
 
@@ -104,6 +140,7 @@ function MutableItem({ item, setItems, items, index }) {
             />
           )}
           <button onClick={handleEditToggle}>Edit</button>
+          <button onClick={handleDeleteItem}>Delete This Item</button>
         </>
       )}
     </li>

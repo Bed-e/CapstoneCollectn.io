@@ -14,34 +14,31 @@ import LoginForm from "./Components/LoginForm";
 import SignupForm from "./Components/SignupForm";
 import LogoutButton from "./Components/LogoutButton";
 import DeleteAccountButton from "./Components/DeleteAccountButton";
+import WelcomeUser from "./Components/WelcomeUser";
 
 import axios from "axios";
 
 import "./App.css";
+const apiURL = "https://collectionapi-5w1t.onrender.com";
 
 function App() {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
   const [sortKey, setSortKey] = useState("alphabetical");
-  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const fetchUserItems = async () => {
       if (user) {
         try {
           // Fetch the user's owned item IDs
-          const response = await axios.get(
-            `http://localhost:3003/users/${user._id}`
-          );
+          const response = await axios.get(`${apiURL}/users/${user._id}`);
           const userItems = response.data.user.owns; // Array of item IDs
           //console.log(userItems);
 
           const itemDetails = [];
           for (let i = 0; i < userItems.length; i++) {
             //console.log(`userItems[${i}]= ${userItems[i]}`);
-            const res = await axios.get(
-              `http://localhost:3003/items/${userItems[i]}`
-            );
+            const res = await axios.get(`${apiURL}/items/${userItems[i]}`);
             const itemObj = res.data.item; //?
             // console.log(`object for the item: `);
             // console.log(itemObj);
@@ -72,11 +69,11 @@ function App() {
     for (let i = 0; i < items.length; i++) {
       let id = items[i]._id;
       //console.log(id);
-      await axios.delete(`http://localhost:3003/items/${id}`);
+      await axios.delete(`${apiURL}/items/${id}`);
     }
     setItems([]);
     //console.log(user._id);
-    await axios.delete(`http://localhost:3003/users/${user._id}`);
+    await axios.delete(`${apiURL}/users/${user._id}`);
     handleLogout();
   };
 
@@ -115,6 +112,7 @@ function App() {
                 <div className="Home">
                   <>
                     <div className="TopButtons">
+                      <WelcomeUser username={user.username} />
                       <LogoutButton handleLogout={handleLogout} />
                       <DeleteAccountButton
                         handleDeleteAccount={handleDeleteAccount}
@@ -131,6 +129,7 @@ function App() {
                         sortKey={sortKey}
                         items={items}
                         setItems={setItems}
+                        user={user}
                       />
                     </div>
                   </>

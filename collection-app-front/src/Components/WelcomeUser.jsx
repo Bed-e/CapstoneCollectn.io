@@ -1,8 +1,8 @@
-// import React from "react";
+import React from "react";
 
-// function WelcomeUser({ username }) {
-//   return <div>Welcome, {username}!</div>;
-// }
+function WelcomeUser({ username }) {
+  return <h3>Welcome, {username}!</h3>;
+}
 
-// export default WelcomeUser;
+export default WelcomeUser;
 //not using anymore

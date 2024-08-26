@@ -2,7 +2,7 @@ import React from "react";
 import MutableItem from "./MutableItem";
 import "./ItemList.css";
 
-function ItemList({ items, setItems, sortKey }) {
+function ItemList({ items, setItems, sortKey, user }) {
   //console.log(sortKey);
 
   // Sort items based on sortKey
@@ -30,7 +30,7 @@ function ItemList({ items, setItems, sortKey }) {
           item={item}
           setItems={setItems}
           items={items}
-          index={item._id}
+          user={user}
         />
       ))}
     </ul>

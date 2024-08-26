@@ -31,7 +31,7 @@ function ItemAddForm({ setItems, items, userId }) {
       try {
         // Post the item object to the backend
         const response = await axios.post(
-          "http://localhost:3003/items",
+          "https://collectionapi-5w1t.onrender.com/items",
           newItem
         );
 
@@ -49,7 +49,7 @@ function ItemAddForm({ setItems, items, userId }) {
 
         // Get the current user's data
         const userResponse = await axios.get(
-          `http://localhost:3003/users/${userId}`
+          `https://collectionapi-5w1t.onrender.com/users/${userId}`
         );
         const user = userResponse.data.user;
         //console.log(user.owns);
@@ -60,11 +60,15 @@ function ItemAddForm({ setItems, items, userId }) {
         //console.log(updatedOwnsArray);
 
         // Send a PUT request to update the user's owns array
-        await axios.put(`http://localhost:3003/users/${userId}`, {
-          owns: updatedOwnsArray,
-        });
+        await axios.put(
+          `https://collectionapi-5w1t.onrender.com/users/${userId}`,
+          {
+            owns: updatedOwnsArray,
+          }
+        );
       } catch (error) {
         console.error("Error adding item or updating user:", error);
+        alert("image too large");
       }
     };
 
