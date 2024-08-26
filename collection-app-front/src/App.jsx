@@ -80,9 +80,9 @@ function App() {
   return (
     <Router>
       <div>
-        <div className="TopTitle">
+        {/* <div className="TopTitle">
           <TopTitle />
-        </div>
+        </div> */}
 
         <Routes>
           <Route

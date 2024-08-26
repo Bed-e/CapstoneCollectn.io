@@ -54,23 +54,23 @@ function SignupForm({ setUser }) {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form onSubmit={handleSignUp}>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
           type="password"
-          placeholder="confirm password"
+          placeholder="Confirm Password"
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
         />

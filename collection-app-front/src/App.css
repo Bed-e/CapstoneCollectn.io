@@ -11,6 +11,21 @@
   justify-content: center;
   align-items: center;
   width: 100%; /* Full width of the container */
+  font-family: sans-serif;
+}
+
+.LoginForm .form-container,
+.SignupForm .form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 2px solid #000; /* Add a border around the form container */
+  background-color: #f3f2f280; /* Optional: add a background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow */
+  max-width: 400px; /* Set a max-width for the form container */
+  width: 100%;
 }
 
 .LoginForm * {
@@ -21,6 +36,65 @@
 .SignupForm * {
   font-size: 20pt;
   padding: 10px;
+}
+
+.LoginForm input[type="text"],
+.LoginForm input[type="password"],
+.SignupForm input[type="text"],
+.SignupForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  border: none;
+  border-bottom: 2px solid #000; /* Bottom border only */
+  background-color: transparent; /* Transparent background */
+  font-size: 18px;
+  outline: none; /* Remove the default outline on focus */
+}
+
+.LoginForm input[type="text"]:focus,
+.LoginForm input[type="password"]:focus,
+.SignupForm input[type="text"]:focus,
+.SignupForm input[type="password"]:focus {
+  border-bottom-color: #000; /* Keep the bottom border color on focus */
+}
+
+.LoginForm input[type="text"]::placeholder,
+.LoginForm input[type="password"]::placeholder,
+.SignupForm input[type="text"]::placeholder,
+.SignupForm input[type="password"]::placeholder {
+  color: #999; /* Optional: style placeholder text */
+}
+
+form {
+  width: 100%; /* Ensure the form takes up the full width of its container */
+  max-width: 400px; /* Set a maximum width for the form */
+  margin: 0 auto; /* Center the form horizontally */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding and border in the element's width and height */
+}
+
+form input[type="text"],
+form input[type="password"] {
+  width: 100%; /* Make the input fields take up the full width of the form */
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-bottom: 2px solid #000; /* Bottom border only */
+  background-color: transparent; /* Transparent background */
+  font-size: 18px;
+  outline: none; /* Remove the default outline on focus */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+  border-bottom-color: #000; /* Keep the bottom border color on focus */
+}
+
+form input[type="text"]::placeholder,
+form input[type="password"]::placeholder {
+  color: #999; /* Optional: style placeholder text */
 }
 
 .TopTitle {
