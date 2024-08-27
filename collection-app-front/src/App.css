@@ -92,6 +92,10 @@ form button[type="submit"]:hover,
   background-color: #f3f2f280; /* Subtle background on hover */
 }
 
+form {
+  outline: none;
+}
+
 /* Home Page Styles */
 .TopTitle {
   position: absolute;
@@ -201,4 +205,10 @@ form button[type="submit"]:hover,
 .TopTitleContainer {
   display: flex;
   align-items: center;
+}
+
+.form-container > form {
+  border: none;
+  box-shadow: none;
+  background: none;
 }
