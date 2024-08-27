@@ -64,7 +64,7 @@ function LoginForm({ setUser }) {
       </form>
       <h3>
         Don't have an account?{" "}
-        <button onClick={() => navigate("/signup")}>Sign up!</button>
+        <button onClick={() => navigate("/signup")}>Create an Account!</button>
       </h3>
     </div>
   );

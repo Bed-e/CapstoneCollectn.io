@@ -1,3 +1,15 @@
+/* Global Styles */
+body,
+* {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -5,17 +17,18 @@
   height: 100vh; /* Full height of the viewport */
 }
 
+/* Form Styles */
 .LoginForm,
 .SignupForm {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%; /* Full width of the container */
-  font-family: sans-serif;
 }
 
 .LoginForm .form-container,
-.SignupForm .form-container {
+.SignupForm .form-container,
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,55 +41,15 @@
   width: 100%;
 }
 
-.LoginForm * {
-  font-size: 20pt;
-  padding: 10px;
-}
-
+.LoginForm *,
 .SignupForm * {
   font-size: 20pt;
   padding: 10px;
 }
 
-.LoginForm input[type="text"],
-.LoginForm input[type="password"],
-.SignupForm input[type="text"],
-.SignupForm input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 20px 0;
-  border: none;
-  border-bottom: 2px solid #000; /* Bottom border only */
-  background-color: transparent; /* Transparent background */
-  font-size: 18px;
-  outline: none; /* Remove the default outline on focus */
-}
-
-.LoginForm input[type="text"]:focus,
-.LoginForm input[type="password"]:focus,
-.SignupForm input[type="text"]:focus,
-.SignupForm input[type="password"]:focus {
-  border-bottom-color: #000; /* Keep the bottom border color on focus */
-}
-
-.LoginForm input[type="text"]::placeholder,
-.LoginForm input[type="password"]::placeholder,
-.SignupForm input[type="text"]::placeholder,
-.SignupForm input[type="password"]::placeholder {
-  color: #999; /* Optional: style placeholder text */
-}
-
-form {
-  width: 100%; /* Ensure the form takes up the full width of its container */
-  max-width: 400px; /* Set a maximum width for the form */
-  margin: 0 auto; /* Center the form horizontally */
-  padding: 20px;
-  box-sizing: border-box; /* Include padding and border in the element's width and height */
-}
-
 form input[type="text"],
 form input[type="password"] {
-  width: 100%; /* Make the input fields take up the full width of the form */
+  width: 100%; /* Full width of the form */
   padding: 10px;
   margin: 10px 0;
   border: none;
@@ -84,7 +57,6 @@ form input[type="password"] {
   background-color: transparent; /* Transparent background */
   font-size: 18px;
   outline: none; /* Remove the default outline on focus */
-  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 form input[type="text"]:focus,
@@ -94,9 +66,33 @@ form input[type="password"]:focus {
 
 form input[type="text"]::placeholder,
 form input[type="password"]::placeholder {
-  color: #999; /* Optional: style placeholder text */
+  color: #999; /* Style placeholder text */
 }
 
+form button[type="submit"],
+.LoginForm button[type="submit"],
+.SignupForm button[type="submit"],
+.LoginForm h3 button,
+.SignupForm h3 button {
+  width: 80%;
+  padding: 10px;
+  margin: 20px auto; /* Center horizontally within the form */
+  border: 2px solid #000;
+  background-color: transparent;
+  font-size: 18px;
+  color: #000;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+
+form button[type="submit"]:hover,
+.LoginForm button[type="submit"]:hover,
+.SignupForm button[type="submit"]:hover {
+  background-color: #f3f2f280; /* Subtle background on hover */
+}
+
+/* Home Page Styles */
 .TopTitle {
   position: absolute;
   top: 10px;
@@ -108,17 +104,13 @@ form input[type="password"]::placeholder {
 }
 
 .Home {
-  margin-top: 60px; /* Adjust this value to create space from the top */
+  margin-top: 60px; /* Space from the top */
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative; /* Make sure Home content is above TopTitle */
+  position: relative; /* Ensure Home content is above TopTitle */
   z-index: 2; /* Higher z-index to keep it in front of TopTitle */
-}
-
-.TopTitle > h1 {
-  margin-top: 0;
 }
 
 .TopButtons {
@@ -143,4 +135,70 @@ form input[type="password"]::placeholder {
 
 .TopButtons button:hover {
   background-color: #528a60; /* Darker shade on hover */
+}
+
+/* Add Item Styles */
+.AddFirstItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Match the width of MutableItem */
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background-color: #f3f2f280;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+
+.add-item-button {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  background-color: transparent;
+  border: 2px solid #000;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-item-button:hover {
+  background-color: #bdffcd;
+}
+
+.AddFirstItem p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #312d2dc9;
+}
+
+.AddItemButton {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+}
+
+.AddItemButton:hover {
+  background-color: darkgreen;
+}
+
+.AddItemButton span {
+  color: white;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.TopTitleContainer {
+  display: flex;
+  align-items: center;
 }

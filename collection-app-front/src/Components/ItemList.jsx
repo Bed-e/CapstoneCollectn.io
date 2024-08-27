@@ -1,8 +1,21 @@
-import React from "react";
+import { React, useState } from "react";
 import MutableItem from "./MutableItem";
 import "./ItemList.css";
+import AddFirstItem from "./AddFirstItem";
+import ItemAddForm from "./ItemAddForm";
 
-function ItemList({ items, setItems, sortKey, user }) {
+{
+  /* <ItemList
+                      sortKey={sortKey}
+                      items={items}
+                      setItems={setItems}
+                      user={user}
+                    /> */
+}
+
+function ItemList({ sortKey, items, setItems, user, setShowForm, showForm }) {
+  //console.log(setItems);
+
   //console.log(sortKey);
 
   // Sort items based on sortKey
@@ -23,17 +36,23 @@ function ItemList({ items, setItems, sortKey, user }) {
   });
 
   return (
-    <ul className="ItemList">
-      {sortedItems.map((item) => (
-        <MutableItem
-          key={item._id}
-          item={item}
-          setItems={setItems}
-          items={items}
-          user={user}
-        />
-      ))}
-    </ul>
+    <div>
+      {items.length > 0 ? (
+        <ul className="ItemList">
+          {sortedItems.map((item) => (
+            <MutableItem
+              key={item._id}
+              item={item}
+              setItems={setItems}
+              items={items}
+              user={user}
+            />
+          ))}
+        </ul>
+      ) : (
+        console.log("hello")
+      )}
+    </div>
   );
 }
 

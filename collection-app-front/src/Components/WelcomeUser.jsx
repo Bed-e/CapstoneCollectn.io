@@ -5,4 +5,3 @@ function WelcomeUser({ username }) {
 }
 
 export default WelcomeUser;
-//not using anymore

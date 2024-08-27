@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function ItemAddForm({ setItems, items, userId }) {
+{
+  /* <ItemAddForm
+                      setShowForm={setShowForm}
+                      setItems={setItems}
+                      items={items}
+                      userId={user._id}
+                    /> */
+}
+
+function ItemAddForm({ setShowForm, setItems, items, userId }) {
+  //console.log(setItems);
   const [itemName, setItemName] = useState("");
   const [description, setDescription] = useState("");
   const [character, setCharacter] = useState("");
@@ -66,6 +76,8 @@ function ItemAddForm({ setItems, items, userId }) {
             owns: updatedOwnsArray,
           }
         );
+
+        setShowForm(false);
       } catch (error) {
         console.error("Error adding item or updating user:", error);
         alert("image too large");
@@ -82,8 +94,8 @@ function ItemAddForm({ setItems, items, userId }) {
   };
 
   return (
-    <div>
-      <h3>Add a new item?</h3>
+    <div className="ItemAddForm">
+      <h2>Add a new item?</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

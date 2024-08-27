@@ -15,6 +15,8 @@ import SignupForm from "./Components/SignupForm";
 import LogoutButton from "./Components/LogoutButton";
 import DeleteAccountButton from "./Components/DeleteAccountButton";
 import WelcomeUser from "./Components/WelcomeUser";
+import SearchBar from "./Components/SearchBar";
+import AddItemButton from "./Components/AddItemButton";
 
 import axios from "axios";
 
@@ -25,6 +27,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
   const [sortKey, setSortKey] = useState("alphabetical");
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchUserItems = async () => {
@@ -79,11 +82,8 @@ function App() {
 
   return (
     <Router>
+      {console.log(showForm)}
       <div>
-        {/* <div className="TopTitle">
-          <TopTitle />
-        </div> */}
-
         <Routes>
           <Route
             path="/login"
@@ -110,29 +110,42 @@ function App() {
             element={
               user ? (
                 <div className="Home">
-                  <>
-                    <div className="TopButtons">
-                      <WelcomeUser username={user.username} />
-                      <LogoutButton handleLogout={handleLogout} />
-                      <DeleteAccountButton
-                        handleDeleteAccount={handleDeleteAccount}
-                      />
-                    </div>
+                  <WelcomeUser username={user.username} />
+
+                  <div className="TopButtons">
+                    <LogoutButton handleLogout={handleLogout} />
+                    <DeleteAccountButton
+                      handleDeleteAccount={handleDeleteAccount}
+                    />
+                  </div>
+
+                  <div className="TopTitleContainer">
+                    <TopTitle />
+                    <AddItemButton
+                      setShowForm={setShowForm}
+                      showForm={showForm}
+                    />
+                  </div>
+
+                  <Filters setSortKey={setSortKey} />
+                  {showForm && (
                     <ItemAddForm
+                      setShowForm={setShowForm}
                       setItems={setItems}
                       items={items}
                       userId={user._id}
                     />
-                    <Filters setSortKey={setSortKey} />
-                    <div className="ItemList">
-                      <ItemList
-                        sortKey={sortKey}
-                        items={items}
-                        setItems={setItems}
-                        user={user}
-                      />
-                    </div>
-                  </>
+                  )}
+                  <div className="ItemList">
+                    <ItemList
+                      sortKey={sortKey}
+                      items={items}
+                      setItems={setItems}
+                      user={user}
+                      showForm={showForm} // Pass showForm to ItemList
+                      setShowForm={setShowForm} // Pass setShowForm to ItemList
+                    />
+                  </div>
                 </div>
               ) : (
                 <Navigate to="/login" />
