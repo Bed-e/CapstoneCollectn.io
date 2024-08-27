@@ -82,7 +82,6 @@ function App() {
 
   return (
     <Router>
-      {console.log(showForm)}
       <div>
         <Routes>
           <Route

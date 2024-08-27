@@ -50,7 +50,7 @@ function ItemList({ sortKey, items, setItems, user, setShowForm, showForm }) {
           ))}
         </ul>
       ) : (
-        <AddFirstItem setShowForm={setShowForm} />
+        <AddFirstItem setShowForm={setShowForm} showForm={showForm} />
       )}
     </div>
   );
