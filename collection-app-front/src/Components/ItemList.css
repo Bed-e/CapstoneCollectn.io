@@ -1,7 +1,7 @@
 .ItemList {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Space between the items */
+  gap: 30px; /* Space between the items */
   justify-content: center; /* Center items horizontally */
 }
 

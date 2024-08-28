@@ -1,23 +1,17 @@
-import { React, useState } from "react";
+import React from "react";
 import MutableItem from "./MutableItem";
 import "./ItemList.css";
 import AddFirstItem from "./AddFirstItem";
-import ItemAddForm from "./ItemAddForm";
 
-{
-  /* <ItemList
-                      sortKey={sortKey}
-                      items={items}
-                      setItems={setItems}
-                      user={user}
-                    /> */
-}
-
-function ItemList({ sortKey, items, setItems, user, setShowForm, showForm }) {
-  //console.log(setItems);
-
-  //console.log(sortKey);
-
+function ItemList({
+  sortKey,
+  items,
+  setItems,
+  user,
+  setShowForm,
+  showForm,
+  searchTerm,
+}) {
   // Sort items based on sortKey
   const sortedItems = [...items].sort((a, b) => {
     if (sortKey === "alphabetical") {
@@ -35,11 +29,21 @@ function ItemList({ sortKey, items, setItems, user, setShowForm, showForm }) {
     }
   });
 
+  // Filter items based on searchTerm
+  const filteredItems = sortedItems.filter((item) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return (
+      item.itemName.toLowerCase().includes(lowerCaseSearchTerm) ||
+      item.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+      item.character.toLowerCase().includes(lowerCaseSearchTerm)
+    );
+  });
+
   return (
     <div>
       {items.length > 0 ? (
         <ul className="ItemList">
-          {sortedItems.map((item) => (
+          {filteredItems.map((item) => (
             <MutableItem
               key={item._id}
               item={item}

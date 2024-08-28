@@ -27,6 +27,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [items, setItems] = useState([]);
   const [sortKey, setSortKey] = useState("alphabetical");
+  const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -109,8 +110,6 @@ function App() {
             element={
               user ? (
                 <div className="Home">
-                  <WelcomeUser username={user.username} />
-
                   <div className="TopButtons">
                     <LogoutButton handleLogout={handleLogout} />
                     <DeleteAccountButton
@@ -126,7 +125,14 @@ function App() {
                     />
                   </div>
 
+                  <WelcomeUser username={user.username} />
+
+                  <SearchBar
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                  />
                   <Filters setSortKey={setSortKey} />
+
                   {showForm && (
                     <ItemAddForm
                       setShowForm={setShowForm}
@@ -141,8 +147,9 @@ function App() {
                       items={items}
                       setItems={setItems}
                       user={user}
-                      showForm={showForm} // Pass showForm to ItemList
-                      setShowForm={setShowForm} // Pass setShowForm to ItemList
+                      showForm={showForm}
+                      setShowForm={setShowForm}
+                      searchTerm={searchTerm}
                     />
                   </div>
                 </div>

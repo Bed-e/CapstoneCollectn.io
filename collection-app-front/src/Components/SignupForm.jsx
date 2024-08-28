@@ -62,6 +62,12 @@ function SignupForm({ setUser }) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <p className="passwordWarning">
+          note: do <strong>not</strong> use a password that you use on other
+          sites.
+          <br />
+          Passwords on this site are <strong>exposed</strong>
+        </p>
         <input
           type="password"
           placeholder="Password"
