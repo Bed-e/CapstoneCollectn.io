@@ -17,6 +17,7 @@ import DeleteAccountButton from "./Components/DeleteAccountButton";
 import WelcomeUser from "./Components/WelcomeUser";
 import SearchBar from "./Components/SearchBar";
 import AddItemButton from "./Components/AddItemButton";
+import ColorPicker from "./Components/ColorPicker";
 
 import axios from "axios";
 
@@ -29,8 +30,14 @@ function App() {
   const [sortKey, setSortKey] = useState("alphabetical");
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [color1, setColor1] = useState("#DFDFDF"); // Default color1
+  const [color2, setColor2] = useState("#ffffff"); // Default color2
 
   useEffect(() => {
+    // Apply the colors as CSS variables
+    document.documentElement.style.setProperty("--primary-color", color1);
+    document.documentElement.style.setProperty("--secondary-color", color2);
+
     const fetchUserItems = async () => {
       if (user) {
         try {
@@ -60,10 +67,23 @@ function App() {
     };
 
     fetchUserItems();
-  }, [user]);
+  }, [user, color1, color2]);
 
   const handleLogout = () => {
     setUser(null); // Clear user state
+  };
+  const handleColor1Change = (newColor1) => {
+    setColor1(newColor1);
+    // Update CSS variables
+    document.documentElement.style.setProperty("--primary-color", newColor1);
+    // You can add more variables as needed
+  };
+
+  const handleColor2Change = (newColor2) => {
+    setColor2(newColor2);
+    // Update CSS variables
+    document.documentElement.style.setProperty("--secondary-color", newColor2);
+    // You can add more variables as needed
   };
 
   const handleDeleteAccount = async () => {
@@ -110,36 +130,46 @@ function App() {
             element={
               user ? (
                 <div className="Home">
-                  <div className="TopButtons">
-                    <LogoutButton handleLogout={handleLogout} />
-                    <DeleteAccountButton
-                      handleDeleteAccount={handleDeleteAccount}
+                  <div className="top-items-container">
+                    <div className="top-left-items">
+                      <WelcomeUser username={user.username} />
+                      <ColorPicker
+                        handleColor1Change={handleColor1Change}
+                        handleColor2Change={handleColor2Change}
+                      />
+                    </div>
+
+                    <div className="TopButtons">
+                      <LogoutButton handleLogout={handleLogout} />
+                      <DeleteAccountButton
+                        handleDeleteAccount={handleDeleteAccount}
+                      />
+                    </div>
+
+                    <div className="TopTitleContainer">
+                      <TopTitle />
+                      <AddItemButton
+                        setShowForm={setShowForm}
+                        showForm={showForm}
+                      />
+                    </div>
+
+                    <SearchBar
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
                     />
+                    <Filters setSortKey={setSortKey} />
                   </div>
-
-                  <div className="TopTitleContainer">
-                    <TopTitle />
-                    <AddItemButton
-                      setShowForm={setShowForm}
-                      showForm={showForm}
-                    />
-                  </div>
-
-                  <WelcomeUser username={user.username} />
-
-                  <SearchBar
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                  />
-                  <Filters setSortKey={setSortKey} />
 
                   {showForm && (
-                    <ItemAddForm
-                      setShowForm={setShowForm}
-                      setItems={setItems}
-                      items={items}
-                      userId={user._id}
-                    />
+                    <div className="AddNewItemForm">
+                      <ItemAddForm
+                        setShowForm={setShowForm}
+                        setItems={setItems}
+                        items={items}
+                        userId={user._id}
+                      />
+                    </div>
                   )}
                   <div className="ItemList">
                     <ItemList

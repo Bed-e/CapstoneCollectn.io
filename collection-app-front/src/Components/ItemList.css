@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #ffffff; /* Default primary color */
+  --secondary-color: #000000; /* Default secondary color */
+}
+
 .ItemList {
   display: flex;
   flex-wrap: wrap;
@@ -6,7 +11,7 @@
 }
 
 .ItemList .item {
-  background-color: #f8f8f8;
+  background-color: var(--primary-color);
   border: 2px solid #333; /* Clear border to delineate items */
   border-radius: 8px;
   padding: 10px;
@@ -47,4 +52,24 @@ li {
   list-style-type: none; /* Remove default bullet points */
   margin: 0;
   padding: 0;
+}
+
+.ItemList .item button {
+  display: block;
+  margin-top: 10px;
+  width: 100%; /* Make buttons full-width */
+  font-size: 1.1em; /* Increase font size for larger text */
+  background-color: var(
+    --secondary-color
+  ); /* Use secondary color for background */
+  color: var(#333); /* Ensure text color contrasts with the button */
+  padding: 8px 16px; /* Add padding for better appearance */
+  border: none; /* Remove default button border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.ItemList .item button:hover {
+  background-color: #333; /* Change to a darker color on hover */
 }
