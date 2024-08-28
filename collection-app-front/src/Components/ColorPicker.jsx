@@ -4,7 +4,7 @@ const ColorPicker = ({ handleColor1Change, handleColor2Change }) => {
   return (
     <div className="ColorPicker">
       <label>
-        Primary Color:
+        Color 1 : <></>
         <input
           type="color"
           onChange={(event) => handleColor1Change(event.target.value)}
@@ -13,7 +13,7 @@ const ColorPicker = ({ handleColor1Change, handleColor2Change }) => {
       </label>
       <br />
       <label>
-        Secondary Color:
+        Color 2 : <></>
         <input
           type="color"
           onChange={(event) => handleColor2Change(event.target.value)}

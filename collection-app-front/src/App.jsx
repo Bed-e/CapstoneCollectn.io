@@ -158,7 +158,10 @@ function App() {
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
                     />
-                    <Filters setSortKey={setSortKey} />
+
+                    <div className="Filters">
+                      <Filters setSortKey={setSortKey} />
+                    </div>
                   </div>
 
                   {showForm && (
